@@ -86,6 +86,11 @@ namespace project_stub {
          */
         public void StartNewQuiz() {
             Quiz quiz = new Quiz();
+            Random rng = new Random();
+
+            quiz.Countries = _viewModel.context.countries;
+            quiz.Shuffle(quiz.Countries);
+
             _view.DrawNewQuizUsernameScreen();
 
             try {
@@ -105,20 +110,22 @@ namespace project_stub {
                 listenForEvent();
                 return;
             }
-            // Console.WriteLine($"{quiz.Mode} {quiz.Player}");
-            foreach (var country in _viewModel.context.countries) {
-                Console.WriteLine(country.ToString());
+
+            for (int i = 0; i < 10; i++) {
+                var answer = quiz.Countries[i];
+                var choices = new List<Country>();
+
+                choices.Add(answer);
+
+                for (int j = 0; j < 3; j++) {
+                    int random = rng.Next(10, quiz.Countries.Count - 2);
+                    choices.Add(quiz.Countries[random]);
+                }
+
+                quiz.Shuffle(choices);
+                var question = new Question(answer, choices);
+                quiz.Questions.Add(question);
             }
-            listenForEvent();
-            //
-
-            _viewModel.Shuffle(_viewModel.context.countries);
-            foreach (var country in _viewModel.context.countries) {
-                Console.WriteLine(country.ToString());
-            }
-            listenForEvent();
-
-
 
         }
 
@@ -225,17 +232,6 @@ namespace project_stub {
             this.context = context;
         }
 
-        public void Shuffle(List<Country> list) {
-            Random rng = new Random();
-            int size = list.Count;
-            while (size > 1) {
-                size--;
-                int i = rng.Next(size + 1);
-                Country temp = list[i];
-                list[i] = list[size];
-                list[size] = temp;
-            }
-        }
     }
 
 
@@ -280,13 +276,43 @@ namespace project_stub {
     }
 
     public class Quiz {
-        public Question[] Questions { get; set; }
+        public List<Question> Questions { get; set; }
+        public List<Country> Countries { get; set; }
         public int Score { get; set; } = 0;
         public string Player { get; set; }
         public int Mode { get; set; }
+
+        public Quiz() {
+            Questions = new List<Question>();
+
+        }
+
+        /*
+         * Shuffle the elements of a list of Country objects
+         *
+         * @param {List<Country>} list to be shuffled
+         */
+        public void Shuffle(List<Country> list) {
+            Random rng = new Random();
+            int size = list.Count;
+            while (size > 1) {
+                size--;
+                int random = rng.Next(size + 1);
+                Country temp = list[random];
+                list[random] = list[size];
+                list[size] = temp;
+            }
+        }
     }
 
     public class Question {
+        public Country Answer { get; set; }
+        public List<Country> Choices { get; set; }
+
+        public Question(Country answer, List<Country> choices) {
+            Answer = answer;
+            Choices = choices;
+        }
     }
 }
 
