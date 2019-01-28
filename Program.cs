@@ -106,6 +106,9 @@ namespace project_stub {
                 return;
             }
             // Console.WriteLine($"{quiz.Mode} {quiz.Player}");
+            // foreach (var country in _viewModel.context.countries) {
+                // Console.WriteLine(country.ToString());
+            // }
             // listenForEvent();
         }
 
@@ -209,7 +212,7 @@ namespace project_stub {
         public Context context;
 
         public ViewModel(Context context) {
-            context = context;
+            this.context = context;
         }
     }
 
@@ -219,12 +222,37 @@ namespace project_stub {
 
         public Context() {
             countries = new List<Country>();
+            ReadFromDatabase();
         }
 
         public void SaveToDatabase() {
         }
 
-        public void ReadFromDatabase() {
+        private void ReadFromDatabase() {
+            var connectionStringBuilder = new SqliteConnectionStringBuilder();
+
+            connectionStringBuilder.DataSource = "assets/testo.db";
+
+            using (var connection = new SqliteConnection(connectionStringBuilder.ConnectionString)) {
+                string queryString = "SELECT * FROM countries";
+
+                connection.Open();
+                var selectCmd = connection.CreateCommand();
+                selectCmd.CommandText = queryString;
+
+                using (var reader = selectCmd.ExecuteReader()) {
+
+                    // .Read() advances to the next row in the result set
+                    while (reader.Read()) {
+                        int id = int.Parse(reader.GetString(0));
+                        string name = reader.GetString(1);
+                        string alpha_2 = reader.GetString(2);
+                        string alpha_3 = reader.GetString(3);
+                        string capital = reader.GetString(4);
+                        countries.Add(new Country(id, name, alpha_2, alpha_3, capital));
+                    }
+                }
+            }
         }
     }
 
@@ -244,17 +272,26 @@ namespace project_stub.Models {
     public class Country {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Alpha_2 { get; set; }
+        public string Alpha_3 { get; set; }
         public string Capital { get; set; }
-        public string Flagdescription { get; set; }
 
         public Country(int id,
                        string name,
-                       string capital,
-                       string flagdescription) {
+                       string alpha_2,
+                       string alpha_3,
+                       string capital
+                      ) {
             Id = id;
             Name = name;
+            Alpha_2 = alpha_2;
+            Alpha_3 = alpha_3;
             Capital = capital;
-            Flagdescription = flagdescription;
+        }
+
+        public override string ToString() {
+            return $"{Id}, {Name}, {Alpha_2}, {Alpha_3}, {Capital}";
         }
     }
+
 }
