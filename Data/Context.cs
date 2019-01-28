@@ -8,6 +8,10 @@ using project_stub.Models;
 
 namespace project_stub.Data {
 
+    /*
+     * The Context Class holds relevant data from local disk in memory and
+     * manages all connections to the database.
+     */
     public class Context {
         public List<Country> countries { get; set; }
         public List<Highscore> highscores { get; set; }
@@ -41,9 +45,6 @@ namespace project_stub.Data {
 
                         insertCmd.CommandText = $"INSERT INTO highscores VALUES ({highscore.Id}, '{highscore.PlayerName}', {highscore.Score})";
                         insertCmd.ExecuteNonQuery();
-
-                        Console.WriteLine($"INSERT INTO highscores VALUES {highscore.Id}, '{highscore.PlayerName}', {highscore.Score}");
-
                     }
 
                     transaction.Commit();

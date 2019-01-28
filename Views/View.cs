@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using project_stub.Models;
+using project_stub.Data;
+
 namespace project_stub.Views {
 
     public class View {
@@ -40,8 +43,10 @@ namespace project_stub.Views {
             Console.Write(_prompt);
         }
 
-        public void DrawHighScores(string[] scores) {
-            // TODO: finish after database interaction is complete
+        public void DrawHighscores(IEnumerable<Highscore> scores) {
+            foreach (var score in scores) {
+                Console.WriteLine($"{score.PlayerName} - {score.Score}");
+            }
         }
     }
 }

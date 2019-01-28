@@ -9,6 +9,10 @@ using project_stub.Data;
 
 namespace project_stub.ViewModels {
 
+    /*
+     * The ViewModel class manages the business logic for the View and its
+     * Controller.
+     */
     public class ViewModel {
         public Context context;
 
@@ -27,6 +31,28 @@ namespace project_stub.ViewModels {
         public bool validateUsername(string username) {
             Regex rx = new Regex(@"^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$");
             return rx.IsMatch(username) ? true : false;
+        }
+
+        /*
+         * Return a list of highscores ordered by the highest score
+         *
+         * @return {IEnumerable<Highscore>} list of all highscores
+         */
+        public IEnumerable<Highscore> GetOrderedHighscores() {
+            return context.highscores.OrderByDescending(score => score.Score);
+        }
+
+        /*
+         * Return a list of highscore of a specific player ordered by the
+         * highest score.
+         *
+         * @return {IEnumerable<Highscore>} list of a players highscores
+         */
+        public IEnumerable<Highscore> GetOrderedHighscores(string playername) {
+            return from highscore in context.highscores
+                where highscore.PlayerName.ToLower() == playername.ToLower()
+                orderby highscore.Score descending
+                select highscore;
         }
     }
 }

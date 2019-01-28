@@ -12,8 +12,8 @@ using project_stub.ViewModels;
 namespace project_stub.Controllers {
 
     /*
-     * This class controls the current view, its associated viewmodel, and
-     * exposes an API of relevant user controls.
+     * The ViewController controls the current view, its associated viewmodel,
+     * and exposes an API of relevant user actions.
      */
     public class ViewController {
         private View _view;
@@ -102,23 +102,19 @@ namespace project_stub.Controllers {
             int newId = _viewModel.context.highscores.Count;
             var highScore = new Highscore(newId, quiz.Player, quiz.Score);
             _viewModel.context.highscores.Add(highScore);
-            foreach (var highscore in _viewModel.context.highscores) {
-                Console.WriteLine(highscore);
-            }
-            Console.ReadLine();
             _viewModel.context.SaveToDatabase();
-            Console.ReadLine();
-
         }
 
         private void processMainMenuInput(EventObject e) {
             var format = e.EventContents.ToLower().Trim();
 
             if (format == "show") {
-                // TODO: request scores from viewmodell and return highscores
+                _view.DrawHighscores(_viewModel.GetOrderedHighscores());
+                listenForEvent();
             } else if (format.Contains("show")) {
                 var playername = format.Split(" ")[1];
-                // TODO: search for player name and return his highscores
+                _view.DrawHighscores(_viewModel.GetOrderedHighscores(playername));
+                listenForEvent();
             } else if (format == "start") {
                 StartNewQuiz();
             } else if (format == "quit" || format == "exit") {
