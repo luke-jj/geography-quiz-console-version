@@ -29,6 +29,5 @@ namespace project_stub.Models {
             return $"{Id}, {Name}, {Alpha_2}, {Alpha_3}, {Capital}";
         }
     }
-
 }
 

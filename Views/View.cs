@@ -33,7 +33,7 @@ namespace project_stub.Views {
             Console.Clear();
             Console.WriteLine("Preparing a new quiz ...");
             Console.WriteLine("Choose your quiz mode (1 2 3):");
-            Console.WriteLine("1 - Guess the country");
+            Console.WriteLine("1 - Guess the country name");
             Console.WriteLine("2 - Guess the flag");
             Console.WriteLine("3 - Guess the captial");
             Console.WriteLine(notification);

@@ -94,6 +94,21 @@ namespace project_stub.Controllers {
                 quiz.Questions.Add(question);
             }
 
+            quiz.Start();
+
+            Console.WriteLine($"Congratulations {quiz.Player}! Your Score is {quiz.Score}");
+            Console.ReadLine();
+
+            int newId = _viewModel.context.highscores.Count;
+            var highScore = new Highscore(newId, quiz.Player, quiz.Score);
+            _viewModel.context.highscores.Add(highScore);
+            foreach (var highscore in _viewModel.context.highscores) {
+                Console.WriteLine(highscore);
+            }
+            Console.ReadLine();
+            _viewModel.context.SaveToDatabase();
+            Console.ReadLine();
+
         }
 
         private void processMainMenuInput(EventObject e) {
