@@ -106,10 +106,20 @@ namespace project_stub {
                 return;
             }
             // Console.WriteLine($"{quiz.Mode} {quiz.Player}");
-            // foreach (var country in _viewModel.context.countries) {
-                // Console.WriteLine(country.ToString());
-            // }
-            // listenForEvent();
+            foreach (var country in _viewModel.context.countries) {
+                Console.WriteLine(country.ToString());
+            }
+            listenForEvent();
+            //
+
+            _viewModel.Shuffle(_viewModel.context.countries);
+            foreach (var country in _viewModel.context.countries) {
+                Console.WriteLine(country.ToString());
+            }
+            listenForEvent();
+
+
+
         }
 
         private void processMainMenuInput(EventObject e) {
@@ -214,6 +224,18 @@ namespace project_stub {
         public ViewModel(Context context) {
             this.context = context;
         }
+
+        public void Shuffle(List<Country> list) {
+            Random rng = new Random();
+            int size = list.Count;
+            while (size > 1) {
+                size--;
+                int i = rng.Next(size + 1);
+                Country temp = list[i];
+                list[i] = list[size];
+                list[size] = temp;
+            }
+        }
     }
 
 
@@ -222,6 +244,7 @@ namespace project_stub {
 
         public Context() {
             countries = new List<Country>();
+
             ReadFromDatabase();
         }
 
@@ -295,3 +318,5 @@ namespace project_stub.Models {
     }
 
 }
+
+
