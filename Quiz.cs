@@ -42,6 +42,7 @@ namespace project_stub {
             foreach (var question in Questions) {
                 if (Mode == 1) {
                     Console.Clear();
+                    Console.WriteLine($"Name: {Player}");
                     Console.WriteLine("Guess the country name:");
                     Console.WriteLine($"{question.Answer.Alpha_2} - {question.Answer.Capital}");
                     Console.WriteLine("Choices:");
@@ -62,6 +63,7 @@ namespace project_stub {
 
                 } else if (Mode == 2) {
                     Console.Clear();
+                    Console.WriteLine($"Name: {Player}");
                     Console.WriteLine("Guess the flag:");
                     Console.WriteLine($"{question.Answer.Name} - {question.Answer.Capital}");
                     Console.WriteLine("Choices:");
@@ -82,6 +84,7 @@ namespace project_stub {
 
                 } else {
                     Console.Clear();
+                    Console.WriteLine($"Name: {Player}");
                     Console.WriteLine("Guess the Capital:");
                     Console.WriteLine($"{question.Answer.Name} - {question.Answer.Alpha_2}");
                     Console.WriteLine("Choices:");
