@@ -34,7 +34,7 @@ namespace project_stub.ViewModels {
         }
 
         /*
-         * Return a list of highscores ordered by the highest score
+         * Return a list of the top ten highscores ordered by the highest score
          *
          * @return {IEnumerable<Highscore>} list of all highscores
          */
@@ -46,8 +46,8 @@ namespace project_stub.ViewModels {
         }
 
         /*
-         * Return a list of highscores of a specific player ordered by the
-         * highest score.
+         * Return a list of the top ten highscores of a specific player ordered
+         * by the highest score.
          *
          * @return {IEnumerable<Highscore>} list of a players highscores
          */
