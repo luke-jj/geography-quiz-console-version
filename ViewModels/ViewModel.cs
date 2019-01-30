@@ -49,11 +49,14 @@ namespace project_stub.ViewModels {
          * Return a list of the top ten highscores of a specific player ordered
          * by the highest score.
          *
+         * @param {string} part of, or the whole of the playername to be queried
          * @return {IEnumerable<Highscore>} list of a players highscores
          */
         public IEnumerable<Highscore> GetOrderedHighscores(string playername) {
             return (from highscore in context.highscores
-                where highscore.PlayerName.ToLower() == playername.ToLower()
+                where highscore.PlayerName
+                        .ToLower()
+                        .Contains(playername.ToLower())
                 orderby highscore.Score descending
                 select highscore).Take(10);
         }
