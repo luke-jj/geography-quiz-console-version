@@ -39,20 +39,23 @@ namespace project_stub.ViewModels {
          * @return {IEnumerable<Highscore>} list of all highscores
          */
         public IEnumerable<Highscore> GetOrderedHighscores() {
-            return context.highscores.OrderByDescending(score => score.Score);
+            // return context.highscores.OrderByDescending(score => score.Score);
+            return (from highscore in context.highscores
+                orderby highscore.Score descending
+                select highscore).Take(10);
         }
 
         /*
-         * Return a list of highscore of a specific player ordered by the
+         * Return a list of highscores of a specific player ordered by the
          * highest score.
          *
          * @return {IEnumerable<Highscore>} list of a players highscores
          */
         public IEnumerable<Highscore> GetOrderedHighscores(string playername) {
-            return from highscore in context.highscores
+            return (from highscore in context.highscores
                 where highscore.PlayerName.ToLower() == playername.ToLower()
                 orderby highscore.Score descending
-                select highscore;
+                select highscore).Take(10);
         }
     }
 }
