@@ -29,7 +29,7 @@ namespace project_stub.ViewModels {
          * @return {bool} true or false
          */
         public bool validateUsername(string username) {
-            Regex rx = new Regex(@"^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$");
+            Regex rx = new Regex(@"^(?=.{1,15}$)[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$");
             return rx.IsMatch(username) ? true : false;
         }
 
